@@ -2,6 +2,30 @@
 
 Book Rating Prediction API is a FastAPI-based service that predicts a numerical rating (e.g., 1 to 5) based on a given user review of a book. It uses a fine-tuned ModernBERT model exported to ONNX for efficient inference. The API provides endpoints for health checks and real-time rating predictions from raw text inputs.
 
+## Project Structure
+Review-Rating-Prediction-API/
+├── app/
+│   ├── __init__.py
+│   ├── BERT_regressor.py       # Loads the ONNX model and handles predictions
+│   ├── config.py						  # Contains configuration
+│   ├── exception_handler.py   #exception handling logic for FastAPI
+│   ├── main.py # FastAPI entry point with endpoints
+│   ├── model.py # Defines the machine learning model wrapper
+│   ├── schema.py # Pydantic data schemas for request and response validation
+│   └── example/
+│       └── client.py # Example client for testing the API
+├── notebooks/
+│   ├── convert_onnx.ipynb # Converts the trained PyTorch model to ONNX format
+│   ├── expand_dataset.ipynb # Data augmentation
+│   ├── ML.ipynb # Classic ML model experiments
+│   └── ModernBERT.ipynb # Fine-tuning and evaluation of the ModernBERT 
+├── model/
+│   ├── bert_regressor.onnx # Exported ONNX model used for inference
+│   └── tokenizer/ # Tokenizer files corresponding to the ModernBERT 
+├── requirements.txt # Python dependencies for the project
+├── .gitignore
+└── README.md
+
 ## Installation
 
 ### - Setup Python Virtual Environment
