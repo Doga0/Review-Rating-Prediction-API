@@ -1,11 +1,13 @@
-# Book Rating Prediction 
+# Overview
+
+Book Rating Prediction API is a FastAPI-based service that predicts a numerical rating (e.g., 1 to 5) based on a given user review of a book. It uses a fine-tuned ModernBERT model exported to ONNX for efficient inference. The API provides endpoints for health checks and real-time rating predictions from raw text inputs.
 
 ## Installation
 
-### - Setup Python Virtual Enviroment
+### - Setup Python Virtual Environment
 - `python -m venv env`
 
-### - Activate The Enviroment
+### - Activate The Environment
 - Windows
   `.\.venv\Scripts\Activate.ps1`
  - macOS/Linux
@@ -15,7 +17,7 @@
 `pip install -r requirements.txt`
 
 ### - Configure the model
-Set the `GLOBAL_CONFIG` variable as follows:
+Set the `GLOBAL_CONFIG` variable as follows `config.py`:
 <pre><code><details> 
 GLOBAL_CONFIG = { 
 "MODEL_PATH": "../model/bert_regressor.onnx", 
@@ -52,9 +54,9 @@ GLOBAL_CONFIG = {
 
 ### - Powershell
 > You can send a request to the API via PowerShell.
-- <pre>(Invoke-WebRequest -Uri "http://localhost:8000/predict" -Method POST -Headers @{ "Content-Type" = "application/json" } -Body '{"reviewText":"This book is amazing!').Content | ConvertFrom-Json | Select-Object -ExpandProperty rating<pre>
+- <pre>(Invoke-WebRequest -Uri "http://localhost:8000/predict" -Method POST -Headers @{ "Content-Type" = "application/json" } -Body '{"reviewText":"This book is amazing!').Content | ConvertFrom-Json | Select-Object -ExpandProperty rating</pre>
 
-### By Code
+### - By Code
 > You can call the API programmatically using Python and the `requests` library:
 1. Start the API server:
  `uvicorn main:app --reload`
@@ -108,7 +110,7 @@ Status Code: 200 OK
 Example Cases:
 - If the reviewText field is missing in the POST /predict request
 - If the wrong data type was sent (e.g. reviewText: int)
-
+---
 - **Internal Server Error**
 
 >   Failure to load the model while the application is running, NoneType errors, exception in the predict function of the model, unexpected Python errors such as file access.
@@ -117,14 +119,14 @@ Example Cases:
 - If there is no model file
 - model_wrapper.session does not exist (NoneType error)
 - if there is an error inside the predict() function (e.g. the tokeniser is not loaded properly)
-
+---
 - **FileNotFoundError**
 >   Thrown if the file being accessed on the file system does not exist.
 
 Example Cases: 
 - File not found when trying to load model file (Model(model_path=...)).
 - File path access error received from the user
-
+---
 - **TimeoutError**
 
 >   This error occurs if the asynchronous operation is not completed within a certain time.
@@ -132,7 +134,7 @@ Example Cases:
 Example Cases:
 - An estimate or data processing that takes too long.
 - Connection timeout when receiving data from external services.
-
+---
 - **RuntimeError**
 
 >  The program encounters an unexpected situation at runtime.
